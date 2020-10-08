@@ -95,19 +95,59 @@ public class UserStorySix extends firstCommonSteps {
 
     @Test
     public void test5() throws InterruptedException {
-        extentLogger = report.createTest("Editing the costs");
+        extentLogger = report.createTest("Editing the Vehicle costs");
         Thread.sleep(3000);
+
         extentLogger.info("Click the first entry on the table");
         driver.findElement(By.xpath("//tr[@class='grid-row row-click-action']")).click();
         Thread.sleep(5000);
 
-        extentLogger.info("Verify that user can edit the Vehicle Costs");
+        extentLogger.info("Click the Edit button");
         driver.findElement(By.xpath("//a[@title='Edit Vehicle Costs']")).click();
+
+        extentLogger.info("Clear the data in one of the input fields");
         WebElement inputBox = driver.findElement(By.xpath("//input[@data-name ='field__total-price']"));
         String firstValue = inputBox.getAttribute("value");
         inputBox.clear();
+
+        extentLogger.info("Send new data to the input field");
         inputBox.sendKeys("45,000.00");
         Thread.sleep(2000);
+
+        extentLogger.info("Verify that the data in the input field has changed");
         Assert.assertNotEquals(inputBox.getAttribute("value"),firstValue);
+        extentLogger.pass("Test passed");
     }
+    @Test
+    public void test6() throws InterruptedException {
+        extentLogger = report.createTest("Adding attachment");
+
+        Thread.sleep(5000);
+        extentLogger.info("Click the first entry on the table");
+        driver.findElement(By.xpath("//tr[@class='grid-row row-click-action']")).click();
+        Thread.sleep(5000);
+
+        extentLogger.info("Click the More Actions button");
+        driver.findElement(By.xpath("//a[@class='btn dropdown-toggle']")).click();
+
+        extentLogger.info("Click the Add Attachment button");
+        driver.findElement(By.xpath("//a[@title='Add attachment']")).click();
+        Thread.sleep(3000);
+
+        extentLogger.info("Choosing a file to attach and uploading the file");
+        driver.findElement(By.xpath("//input[@name='oro_attachment[file][file]']")).sendKeys("C:/Users/Admin/Desktop/isItFair.png");
+        driver.findElement(By.xpath("//button[.='Save']")).click();
+        Thread.sleep(3000);
+
+
+        extentLogger.info("Verifying if the attachment was uploaded");
+        String expected = "Attachment created successfully";
+        String actual = driver.findElement(By.xpath("//div[@class='flash-messages-holder']")).getText();
+        Assert.assertTrue(actual.contains(expected));
+
+        extentLogger.pass("Test passed");
+
+    }
+
+
 }

@@ -7,15 +7,16 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class UserStorySix extends firstCommonSteps{
+public class UserStorySix extends firstCommonSteps {
     @Test
-    public void test1(){
+    public void test1() {
         extentLogger = report.createTest("Accessing vehicle costs page");
         extentLogger.info("Verify access vehicle costs page");
 
         Assert.assertTrue(driver.getCurrentUrl().contains("VehicleCosts"));
         extentLogger.pass("Test passed");
     }
+
     @Test
     public void test2() throws InterruptedException {
         extentLogger = report.createTest("Creating vehicle cost");
@@ -47,6 +48,7 @@ public class UserStorySix extends firstCommonSteps{
         extentLogger.pass("Test passed");
 
     }
+
     @Test
     public void test3() throws InterruptedException {
         extentLogger = report.createTest("Cancelling the attempt to create vehicle cost");
@@ -63,11 +65,12 @@ public class UserStorySix extends firstCommonSteps{
         Thread.sleep(2000);
         extentLogger.info("Verifying user is at the previous page");
         String urlAfterAction = driver.getCurrentUrl();
-        Assert.assertEquals(urlBeforeAction,urlAfterAction);
+        Assert.assertEquals(urlBeforeAction, urlAfterAction);
 
         extentLogger.pass("Test passed");
 
     }
+
     @Test
     public void test4() throws InterruptedException {
         extentLogger = report.createTest("Deleting the costs");
@@ -84,9 +87,27 @@ public class UserStorySix extends firstCommonSteps{
         driver.findElement(By.xpath("//a[.='Yes, Delete']")).click();
 
         extentLogger.info("Verify that one of the items were deleted");
-        String  totalNumberAfterDeleting = driver.findElement(By.xpath("//label[@class='dib'][3]")).getText();
-        Assert.assertFalse(totalNumberBeforeDeleting.equals(totalNumberAfterDeleting));
+        String totalNumberAfterDeleting = driver.findElement(By.xpath("//label[@class='dib'][3]")).getText();
+        Assert.assertNotEquals(totalNumberBeforeDeleting,totalNumberAfterDeleting);
 
         extentLogger.pass("Test passed");
+    }
+
+    @Test
+    public void test5() throws InterruptedException {
+        extentLogger = report.createTest("Editing the costs");
+        Thread.sleep(3000);
+        extentLogger.info("Click the first entry on the table");
+        driver.findElement(By.xpath("//tr[@class='grid-row row-click-action']")).click();
+        Thread.sleep(5000);
+
+        extentLogger.info("Verify that user can edit the Vehicle Costs");
+        driver.findElement(By.xpath("//a[@title='Edit Vehicle Costs']")).click();
+        WebElement inputBox = driver.findElement(By.xpath("//input[@data-name ='field__total-price']"));
+        String firstValue = inputBox.getAttribute("value");
+        inputBox.clear();
+        inputBox.sendKeys("45,000.00");
+        Thread.sleep(2000);
+        Assert.assertNotEquals(inputBox.getAttribute("value"),firstValue);
     }
 }

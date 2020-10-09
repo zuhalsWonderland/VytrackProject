@@ -5,6 +5,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.cybertek.pages.DashBoardPage;
 import com.cybertek.pages.LoginPage;
+import com.cybertek.pages.VehicleCostsPage;
 import com.cybertek.utilities.BrowserUtils;
 import com.cybertek.utilities.ConfigurationReader;
 import com.cybertek.utilities.Driver;
@@ -30,6 +31,7 @@ public class firstCommonSteps {
     protected ExtentReports report;
     protected ExtentHtmlReporter htmlReporter;
     protected ExtentTest extentLogger;
+    protected VehicleCostsPage vehicleCostsPage;
 
     @BeforeTest
     public void setUpTest(){

@@ -1,5 +1,6 @@
 package com.cybertek.tests;
 
+import com.cybertek.pages.VehicleCostsPage;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -124,14 +125,10 @@ public class UserStorySix extends firstCommonSteps {
 
         Thread.sleep(5000);
         extentLogger.info("Click the first entry on the table");
-        driver.findElement(By.xpath("//tr[@class='grid-row row-click-action']")).click();
-        Thread.sleep(5000);
-
         extentLogger.info("Click the More Actions button");
-        driver.findElement(By.xpath("//a[@class='btn dropdown-toggle']")).click();
-
         extentLogger.info("Click the Add Attachment button");
-        driver.findElement(By.xpath("//a[@title='Add attachment']")).click();
+        VehicleCostsPage vehicleCostsPage = new VehicleCostsPage();
+        vehicleCostsPage.commonSteps("attachment");
         Thread.sleep(3000);
 
         extentLogger.info("Choosing a file to attach and uploading the file");
@@ -142,7 +139,62 @@ public class UserStorySix extends firstCommonSteps {
 
         extentLogger.info("Verifying if the attachment was uploaded");
         String expected = "Attachment created successfully";
-        String actual = driver.findElement(By.xpath("//div[@class='flash-messages-holder']")).getText();
+        String actual = vehicleCostsPage.confirmMessage.getText();
+        Assert.assertTrue(actual.contains(expected));
+
+        extentLogger.pass("Test passed");
+
+    }
+    @Test
+    public void test7() throws InterruptedException {
+        extentLogger = report.createTest("Adding note");
+        Thread.sleep(2000);
+
+        extentLogger.info("Click the first entry on the table");
+        extentLogger.info("Click the More Actions button");
+        extentLogger.info("Click the Add note button");
+        VehicleCostsPage vehicleCostsPage = new VehicleCostsPage();
+        vehicleCostsPage.commonSteps("note");
+
+        extentLogger.info("Sending a note to add");
+        driver.switchTo().frame(0);
+        driver.findElement(By.id("tinymce")).sendKeys("any information");
+        driver.switchTo().defaultContent();
+        Thread.sleep(3000);
+
+        extentLogger.info("Saving the note");
+        driver.findElement(By.xpath("//button[.='Add']")).click();
+        Thread.sleep(2000);
+
+        extentLogger.info("Verifying if the note has been saved successfully");
+        String expected = "Note saved";
+        String actual = vehicleCostsPage.confirmMessage.getText();
+        Assert.assertTrue(actual.contains(expected));
+
+        extentLogger.pass("Test passed");
+
+    }
+    @Test
+    public void test8() throws InterruptedException {
+        extentLogger = report.createTest("Adding event");
+        Thread.sleep(2000);
+
+        extentLogger.info("Click the first entry on the table");
+        extentLogger.info("Click the More Actions button");
+        extentLogger.info("Click the Add Event button");
+        VehicleCostsPage vehicleCostsPage = new VehicleCostsPage();
+        vehicleCostsPage.commonSteps("event");
+
+        extentLogger.info("Sending a note to save");
+        driver.findElement(By.name("oro_calendar_event_form[title]")).sendKeys("Any information");
+
+        extentLogger.info("Saving the note");
+        driver.findElement(By.xpath("//button[.='Save']")).click();
+        Thread.sleep(2000);
+
+        extentLogger.info("Verifying if the note has been saved successfully");
+        String expected = "Calendar event saved";
+        String actual = vehicleCostsPage.confirmMessage.getText();
         Assert.assertTrue(actual.contains(expected));
 
         extentLogger.pass("Test passed");

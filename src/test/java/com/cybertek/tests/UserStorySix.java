@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class UserStorySix extends firstCommonSteps {
     @Test
     public void test1() {
@@ -21,7 +23,7 @@ public class UserStorySix extends firstCommonSteps {
     @Test
     public void test2() throws InterruptedException {
         extentLogger = report.createTest("Creating vehicle cost");
-        Thread.sleep(2000);
+        Thread.sleep(4000);
         extentLogger.info("Clicking the Create Vehicle Costs Button");
         driver.findElement(By.xpath("//a[@title='Create Vehicle Costs']")).click();
         Thread.sleep(3000);
@@ -39,7 +41,7 @@ public class UserStorySix extends firstCommonSteps {
 
         extentLogger.info("Clicking the Save And Close Button");
         driver.findElement(By.cssSelector(".btn.btn-success.action-button")).click();
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         extentLogger.info("Verifying the new vehicle cost entry was saved");
         String expected = "Entity saved";
@@ -200,6 +202,34 @@ public class UserStorySix extends firstCommonSteps {
         extentLogger.pass("Test passed");
 
     }
+    @Test
+    public void test9() throws InterruptedException {
+        extentLogger = report.createTest("Reseting the grid by clicking on the grid setting");
+        Thread.sleep(4000);
+
+        extentLogger.info("Click on the grid setting");
+        driver.findElement(By.xpath("//a[@title='Grid Settings']")).click();
+        Thread.sleep(2000);
+
+        extentLogger.info("Add id row to the grid");
+        driver.findElement(By.xpath("//tbody/tr/td[3]/input")).click();
+        Thread.sleep(2000);
+
+        extentLogger.info("Close the grid setting table");
+        driver.findElement(By.cssSelector("span.close")).click();
+        Thread.sleep(2000);
+
+        extentLogger.info("Reset the table");
+        driver.findElement(By.xpath("//a[@title='Reset']")).click();
+        Thread.sleep(4000);
+
+        extentLogger.info("Verify if the page is reseted");
+        System.out.println(driver.findElement(By.xpath("//div[@class='edited-label']")).getText());
+        Assert.assertFalse(driver.findElement(By.cssSelector("div.edited-label")).isDisplayed());
+
+        extentLogger.pass("Test passed");
 
 
+
+    }
 }

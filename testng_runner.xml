@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="VytrackProject" verbose="1">
+    <test name="VytrackProject Test">
+       <classes>
+
+            <class name="com.cybertek.tests.UserStorySix">
+
+            </class>
+       </classes>
+    </test>
+</suite>
